@@ -1,0 +1,81 @@
+/* Coded by Oto */
+
+/***********************
+       General
+***********************/
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+/***********************
+       Layout
+***********************/
+
+.game {
+  width: 60vmin;
+  height: 75vmin;
+  min-width: 280px;
+  min-height: 350px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+}
+
+.game-header {
+  text-align: center;
+  height: 20%;
+  border: 2px dashed blue;
+}
+
+.cards-area {
+  height: 80%;
+  border-radius: 2%;
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2vmin;
+  padding: 2vmin;
+  background: linear-gradient(135deg, #25ceba, #b07bd2);
+}
+
+.card-container {
+  border-radius: 10%;
+  border: 2px dashed red;
+}
+
+/*.card-wrapper {
+}
+
+.front {
+
+}
+
+.back {
+  background: rgb(42, 62, 75);
+}*/
+
+/***********************
+       Typography
+***********************/
+
+.game-name {
+  font: 5vmin 'Open Sans', sans-serif;
+  padding-top: 1.5vmin;
+}
