@@ -107,7 +107,7 @@ body {
   transform: translate(-50%, -50%);
 }
 
-.card-wrapper:active {
+.card-wrapper.flip {
   transform: rotateY(180deg);
 }
 
@@ -121,7 +121,7 @@ body {
 }
 
 .card-text {
-  font-size: 1em;
+  font-size: 2em;
   color: white;
   text-transform: uppercase;
 }
