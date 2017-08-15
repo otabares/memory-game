@@ -23,9 +23,13 @@ $(document).ready(function() {
     // flips card on click if it is not already flipped and adds
     // the card's content to an array for comparison purposes
     if (!$(this).hasClass('flip')) {
+      if ($(this).hasClass('wrong')) {
+        $(this).toggleClass('wrong')
+      }
       $(this).toggleClass('flip');
       currentCards.push($(this).find('p'));
     }
+
 
     // compares the cards in the array when there are two
     if (currentCards.length === 2) {
@@ -70,34 +74,32 @@ function compareCards() {
   var elem2 = currentCards[1].closest('.card-wrapper');
 
   if (currentCards[0].text() !== currentCards[1].text()) {
-    // elem1.toggleClass('wrong');
-    // elem2.toggleClass('wrong');
+    elem1.toggleClass('wrong');
+    elem2.toggleClass('wrong');
 
     setTimeout(function() {
       elem1.toggleClass('flip');
-    }, 1000);
+    }, 400);
 
     setTimeout(function() {
       elem2.toggleClass('flip');
-    }, 1000);
-
-    // setTimeout(function() {
-    //   elem1.toggleClass('wrong');
-    // }, 1000);
-    //
-    // setTimeout(function() {
-    //   elem2.toggleClass('wrong');
-    // }, 1000);
-
-    // elem1.toggleClass('wrong');
-    // elem2.toggleClass('wrong');
+    }, 400);
 
   } else {
-    console.log(elem1, elem2);
-    elem1.addClass('right');
-    elem2.addClass('right');
+    // elem1.children('.back').css('background-color', '#2ce6c1');
+    // elem2.children('.back').css('background-color', '#2ce6c1');
+
+    setTimeout(function() {
+      elem1.addClass('right');
+    }, 200);
+
+    setTimeout(function() {
+      elem2.addClass('right');
+    }, 200);
   }
 
   // reset the array for next comparison
   currentCards = [];
+
+
 }
