@@ -2,21 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Oto's Memory Game</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="game.js"></script>
 </head>
 <body>
-  <main class="game">
+  <div class="game">
 
     <!-- Game Header -->
     <header class="game-header">
       <h1 class="game-name">Matching Game</h1>
+      <div class="game-metrics">
+        <div class="stars">
+          <img src="images/star.png" alt="star">
+          <img src="images/star.png" alt="star">
+          <img src="images/star.png" alt="star">
+        </div>
+        <div class="moves-counter">
+          <p>0 Moves</p>
+        </div>
+        <div class="timer">
+          <p>00:00</p>
+        </div>
+        <div class="restart">
+          <p>Restart</p>
+        </div>
+      </div>
     </header>
 
     <!-- Area Where Cards Are Displayed -->
-    <section class="cards-area">
+    <div class="cards-area">
 
       <!-- Card 1 -->
       <div class="card-container"> <!-- 3D space -->
@@ -162,7 +179,16 @@
         </div>
       </div>
 
-    </section>
-  </main>
+    </div>
+  </div>
+  <section class="won">
+    <div class="won-message-wrapper">
+      <h2 class="won-heading">Congratulations! You Won!</h2>
+      <p class="results"></p>
+      <p class="time-elapsed"></p>
+      <div class="stars"></div>
+      <input type="button" value="Play again!" class="again-button">
+    </div>
+  </section>
 </body>
 </html>

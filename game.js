@@ -7,37 +7,48 @@
 
 // for randomly constructing back of cards
 var cards = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
-// for comparing values of two cards
-var currentCards = [];
-
+var currentCards = []; // for comparing values of two cards
+var correctMatches = 0;
+var startTimer = true;
+var totalMoves = 0;
+var starsLeft = 3;
+var secondsElapsed = 0;
+var minsElapsed = 0;
 
 /***********************
-    Document Ready
+    Main Logic
 ***********************/
 
 $(document).ready(function() {
   shuffleCards();
+  playGame();
+  restarting();
+  setInterval(function() {
+    timingFn();
+  }, 1000);
+});
 
+function playGame() {
   $('.card-wrapper').click(function() {
-
-    // flips card on click if it is not already flipped and adds
-    // the card's content to an array for comparison purposes
+    if (startTimer) {
+      setInterval(function() {
+        secondsElapsed++;
+      }, 1000);
+      startTimer = false;
+    }
     if (!$(this).hasClass('flip')) {
-      if ($(this).hasClass('wrong')) {
-        $(this).toggleClass('wrong')
-      }
       $(this).toggleClass('flip');
       currentCards.push($(this).find('p'));
     }
-
-
-    // compares the cards in the array when there are two
     if (currentCards.length === 2) {
+      totalMoves += 1;
+      $('.moves-counter').html('<p>' + String(totalMoves) + ' Moves</p>');
       compareCards();
     }
+    updateStars();
+    winning();
   });
-});
-
+}
 
 /***********************
     Helper Functions
@@ -72,10 +83,7 @@ function compareCards() {
 
   var elem1 = currentCards[0].closest('.card-wrapper');
   var elem2 = currentCards[1].closest('.card-wrapper');
-
   if (currentCards[0].text() !== currentCards[1].text()) {
-    elem1.toggleClass('wrong');
-    elem2.toggleClass('wrong');
 
     setTimeout(function() {
       elem1.toggleClass('flip');
@@ -86,20 +94,87 @@ function compareCards() {
     }, 400);
 
   } else {
-    // elem1.children('.back').css('background-color', '#2ce6c1');
-    // elem2.children('.back').css('background-color', '#2ce6c1');
-
-    setTimeout(function() {
-      elem1.addClass('right');
-    }, 200);
-
-    setTimeout(function() {
-      elem2.addClass('right');
-    }, 200);
+    elem1.children('.back').addClass('right');
+    elem2.children('.back').addClass('right');
+    correctMatches += 1;
   }
-
   // reset the array for next comparison
   currentCards = [];
+}
 
+function winning() {
+  if (correctMatches === 8) {
+    setTimeout(function() {
+      $('.game').toggle();
+    }, 400);
+    setTimeout(function() {
+      $('.won').toggle();
+    }, 400);
+    $('.results').text('With ' + totalMoves + ' moves and ' +
+      starsLeft + ' stars.');
+    $('.time-elapsed').text(
+      'It took you ' + minsElapsed + ' minutes and ' +
+      secondsElapsed + ' seconds!');
+    clearInterval(secondsElapsed);
+  }
+}
 
+function restarting() {
+  $('.again-button').click(function(){
+    location.reload();
+  });
+
+  $('.restart').click(function(){
+    location.reload();
+  });
+}
+
+function updateStars() {
+  if (totalMoves > 12) {
+    starsLeft = 2;
+    $('.stars').html(
+      '<img src="images/star.png" alt="star">' +
+      '<img src="images/star.png" alt="star">' +
+      '<img src="images/star_outline.png" alt="star">');
+  }
+  if (totalMoves > 16) {
+    starsLeft = 1;
+    $('.stars').html(
+      '<img src="images/star.png" alt="star">' +
+      '<img src="images/star_outline.png" alt="star">' +
+      '<img src="images/star_outline.png" alt="star">');
+  }
+  if (totalMoves > 20) {
+    starsLeft = 0;
+    $('.stars').html(
+      '<img src="images/star_outline.png" alt="star">' +
+      '<img src="images/star_outline.png" alt="star">' +
+      '<img src="images/star_outline.png" alt="star">');
+  }
+}
+
+function timingFn() {
+  var secStr = ''
+  var minStr = ''
+
+  if (secondsElapsed === 60) {
+    minsElapsed++;
+    secondsElapsed = 0;
+  }
+
+  // create a seconds string
+  if (secondsElapsed < 10) {
+    secStr = '0' + String(secondsElapsed);
+  } else {
+    secStr = String(secondsElapsed);
+  }
+
+  // create a minutes string
+  if (minsElapsed < 10) {
+    minStr = '0' + String(minsElapsed);
+  } else {
+    minStr = String(minsElapsed);
+  }
+
+  $('.timer p').text(minStr + ':' + secStr);
 }
